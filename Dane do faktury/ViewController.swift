@@ -30,7 +30,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         EditSaveButton.addTarget(self, action: #selector(editSaveAction), for: .touchUpInside)
-        setupViewEditing(isEditingMode: IsEditMode);
+        setupViewEditing(isEditingMode: IsEditMode)
+        initDoneButton()
         
         loadData(item: CompanyItemElement);
         
@@ -80,6 +81,29 @@ class ViewController: UIViewController {
         CompanyCarRegistrationNumber.textColor = foregroundColor
         CompanyRegon.backgroundColor = backgroundColor
         CompanyRegon.textColor = foregroundColor
+    }
+    
+    private func initDoneButton()
+    {
+        let toolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0,  width: self.view.frame.size.width, height: 30))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem:    .flexibleSpace, target: nil, action: nil)
+        let doneBtn: UIBarButtonItem = UIBarButtonItem(title: "Ukryj", style: .done, target: self, action: #selector(doneButtonAction))
+        toolbar.setItems([flexSpace, doneBtn], animated: false)
+        toolbar.sizeToFit()
+        
+        CompanyName.inputAccessoryView = toolbar
+        CompanyAddress.inputAccessoryView = toolbar
+        CompanyNIP.inputAccessoryView = toolbar
+        CompanyCarRegistrationNumber.inputAccessoryView = toolbar
+        CompanyRegon.inputAccessoryView = toolbar
+    }
+    
+    @objc func doneButtonAction() {
+        self.view.endEditing(true);
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        doneButtonAction();
     }
     
     @objc func editSaveAction(sender: UIButton!) {

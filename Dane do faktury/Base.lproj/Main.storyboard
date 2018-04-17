@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ah5-x1-Rie">
-                                <rect key="frame" x="12" y="46" width="351" height="572"/>
+                                <rect key="frame" x="12" y="20" width="351" height="598"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nazwa:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfx-ce-GEo" userLabel="Company Name Label">
                                         <rect key="frame" x="0.0" y="0.0" width="351" height="14.5"/>
@@ -87,10 +87,10 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <view contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="248" translatesAutoresizingMaskIntoConstraints="NO" id="SXF-ga-w4q">
-                                        <rect key="frame" x="0.0" y="275.5" width="351" height="296.5"/>
+                                        <rect key="frame" x="0.0" y="275.5" width="351" height="322.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyE-nh-Tve">
-                                                <rect key="frame" x="142.5" y="255.5" width="66" height="41"/>
+                                                <rect key="frame" x="142.5" y="281.5" width="66" height="41"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <state key="normal" title="Edytuj">
                                                     <color key="titleColor" red="0.85435702300000005" green="0.89413718519999996" blue="0.96044015250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -111,7 +111,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ah5-x1-Rie" secondAttribute="trailing" constant="12" id="1Zc-Gg-tqv"/>
                             <constraint firstItem="ah5-x1-Rie" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="12" id="YCh-A3-nN3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ah5-x1-Rie" secondAttribute="bottom" id="cwu-7w-fLG"/>
-                            <constraint firstItem="ah5-x1-Rie" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="26" id="gHr-XT-CYv"/>
+                            <constraint firstItem="ah5-x1-Rie" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="gHr-XT-CYv"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
