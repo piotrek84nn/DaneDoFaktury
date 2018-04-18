@@ -55,6 +55,7 @@ class ViewController: UIViewController {
                 
                 if let cAddress = decodedCompanyItem.CompanyAddress {
                     CompanyItemElement.CompanyAddress = cAddress
+                    blockScreenTurningOff();
                 }
                 
                 if let cNIP = decodedCompanyItem.CompanyNIP {
@@ -111,8 +112,7 @@ class ViewController: UIViewController {
         CompanyRegon.textColor = foregroundColor
     }
     
-    private func initDoneButton()
-    {
+    private func initDoneButton() {
         toolbar = UIToolbar(frame: CGRect(x: 0, y: 0,  width: self.view.frame.size.width, height: 30))
         let flexSpace = UIBarButtonItem(barButtonSystemItem:    .flexibleSpace, target: nil, action: nil)
         let doneBtn: UIBarButtonItem = UIBarButtonItem(title: "Ukryj", style: .done, target: self, action: #selector(doneButtonAction))
@@ -159,8 +159,7 @@ class ViewController: UIViewController {
         }
     }
     
-    private func saveData()
-    {
+    private func saveData() {
         CompanyItemElement.CompanyName = CompanyName.text
         CompanyItemElement.CompanyAddress = CompanyAddress.text
         CompanyItemElement.CompanyNIP = CompanyNIP?.text
@@ -170,6 +169,11 @@ class ViewController: UIViewController {
         let encodedData = NSKeyedArchiver.archivedData(withRootObject: CompanyItemElement)
         let userDefaults = UserDefaults.standard
         userDefaults.set(encodedData, forKey: saveDataKey)
+    }
+    
+    private func blockScreenTurningOff() {
+        UIApplication.shared.isIdleTimerDisabled = false
+        UIApplication.shared.isIdleTimerDisabled = true
     }
 }
 
