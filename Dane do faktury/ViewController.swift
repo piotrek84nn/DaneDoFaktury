@@ -26,6 +26,8 @@ class ViewController: UIViewController {
     var CompanyItemElement: CompanyItem!
     var IsEditMode: Bool = false;
     
+    var toolbar: UIToolbar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,7 +87,7 @@ class ViewController: UIViewController {
     
     private func initDoneButton()
     {
-        let toolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0,  width: self.view.frame.size.width, height: 30))
+        toolbar = UIToolbar(frame: CGRect(x: 0, y: 0,  width: self.view.frame.size.width, height: 30))
         let flexSpace = UIBarButtonItem(barButtonSystemItem:    .flexibleSpace, target: nil, action: nil)
         let doneBtn: UIBarButtonItem = UIBarButtonItem(title: "Ukryj", style: .done, target: self, action: #selector(doneButtonAction))
         toolbar.setItems([flexSpace, doneBtn], animated: false)
@@ -96,6 +98,8 @@ class ViewController: UIViewController {
         CompanyNIP.inputAccessoryView = toolbar
         CompanyCarRegistrationNumber.inputAccessoryView = toolbar
         CompanyRegon.inputAccessoryView = toolbar
+        
+        toolbar.isHidden = true;
     }
     
     @objc func doneButtonAction() {
@@ -109,6 +113,7 @@ class ViewController: UIViewController {
     @objc func editSaveAction(sender: UIButton!) {
         
         IsEditMode = !IsEditMode;
+        toolbar.isHidden = !IsEditMode;
         setupViewEditing(isEditingMode: IsEditMode);
         setTextInputElementsEditViewMode(isEditingMode: IsEditMode);
         
