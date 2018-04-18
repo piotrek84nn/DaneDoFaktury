@@ -37,25 +37,23 @@ class ViewController: UIViewController {
         
         loadData(item: CompanyItemElement);
         
-        showHideLabel(label: CompanyNIPLabel, uiElementIsHiden: !CompanyNIP.hasText);
-        showHideLabel(label: CompanyCarRegistrationLabel, uiElementIsHiden: !CompanyCarRegistrationNumber.hasText);
-        showHideLabel(label: CompanyRegonLabel, uiElementIsHiden: !CompanyRegon.hasText);
+        if(CompanyItemElement?.CompanyName?.count == 0 || CompanyItemElement?.CompanyAddress?.count == 0) {
+            editSaveAction(sender: nil)
+        }
     }
     
     private func loadData(item : CompanyItem!) {
         
         CompanyItemElement = CompanyItem()
+        blockScreenTurningOff();
         
         if let readedData = UserDefaults.standard.object(forKey: saveDataKey) as? Data {
             if let decodedCompanyItem = NSKeyedUnarchiver.unarchiveObject(with: readedData) as? CompanyItem
             {
-                if let cName = decodedCompanyItem.CompanyName {
+                if let cName = decodedCompanyItem.CompanyName, let cAddress = decodedCompanyItem.CompanyAddress {
                     CompanyItemElement.CompanyName = cName
-                }
-                
-                if let cAddress = decodedCompanyItem.CompanyAddress {
                     CompanyItemElement.CompanyAddress = cAddress
-                    blockScreenTurningOff();
+                    
                 }
                 
                 if let cNIP = decodedCompanyItem.CompanyNIP {
@@ -76,6 +74,10 @@ class ViewController: UIViewController {
         CompanyAddress.text = CompanyItemElement?.CompanyAddress;
         CompanyNIP.text = CompanyItemElement?.CompanyNIP;
         CompanyCarRegistrationNumber.text = CompanyItemElement?.CompanyCarRegistrationNumber;
+        
+        showHideLabel(label: CompanyNIPLabel, uiElementIsHiden: !CompanyNIP.hasText);
+        showHideLabel(label: CompanyCarRegistrationLabel, uiElementIsHiden: !CompanyCarRegistrationNumber.hasText);
+        showHideLabel(label: CompanyRegonLabel, uiElementIsHiden: !CompanyRegon.hasText);
     }
     
     private func setupViewEditing(isEditingMode: Bool) {
