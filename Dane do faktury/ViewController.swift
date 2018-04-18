@@ -23,9 +23,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var CompanyRegonLabel: UILabel!
     @IBOutlet weak var CompanyRegon: UITextField!
     
+    let saveDataKey = "CompanyNameKey"
     var CompanyItemElement: CompanyItem!
     var IsEditMode: Bool = false;
-    
     var toolbar: UIToolbar!
     
     override func viewDidLoad() {
@@ -43,7 +43,33 @@ class ViewController: UIViewController {
     }
     
     private func loadData(item : CompanyItem!) {
-        CompanyItemElement = CompanyItem(CompanyName: "Ala ma kota Handel Usługi Transport Michał Pjaskowski", CompanyAddress: "Jakiś tam adres na zadupiu 87, 31-559 Zakopane", CompanyNIP: "7941606856", CompanyCarRegistrationNumber: nil)
+        
+        CompanyItemElement = CompanyItem()
+        
+        if let readedData = UserDefaults.standard.object(forKey: saveDataKey) as? Data {
+            if let decodedCompanyItem = NSKeyedUnarchiver.unarchiveObject(with: readedData) as? CompanyItem
+            {
+                if let cName = decodedCompanyItem.CompanyName {
+                    CompanyItemElement.CompanyName = cName
+                }
+                
+                if let cAddress = decodedCompanyItem.CompanyAddress {
+                    CompanyItemElement.CompanyAddress = cAddress
+                }
+                
+                if let cNIP = decodedCompanyItem.CompanyNIP {
+                    CompanyItemElement.CompanyNIP = cNIP
+                }
+                
+                if let cRegistrationNumber = decodedCompanyItem.CompanyCarRegistrationNumber {
+                    CompanyItemElement.CompanyCarRegistrationNumber = cRegistrationNumber
+                }
+                
+                if let cRegon = decodedCompanyItem.CompanyRegon {
+                    CompanyItemElement.CompanyRegon = cRegon
+                }
+            }
+        }
         
         CompanyName.text = CompanyItemElement?.CompanyName;
         CompanyAddress.text = CompanyItemElement?.CompanyAddress;
@@ -111,7 +137,6 @@ class ViewController: UIViewController {
     }
     
     @objc func editSaveAction(sender: UIButton!) {
-        
         IsEditMode = !IsEditMode;
         toolbar.isHidden = !IsEditMode;
         setupViewEditing(isEditingMode: IsEditMode);
@@ -126,11 +151,25 @@ class ViewController: UIViewController {
         }
         else
         {
+            saveData()
             EditSaveButton.setTitle("Edytuj ", for: .normal);
             showHideLabel(label: CompanyNIPLabel, uiElementIsHiden: !CompanyNIP.hasText);
             showHideLabel(label: CompanyCarRegistrationLabel, uiElementIsHiden: !CompanyCarRegistrationNumber.hasText);
             showHideLabel(label: CompanyRegonLabel, uiElementIsHiden: !CompanyRegon.hasText);
         }
+    }
+    
+    private func saveData()
+    {
+        CompanyItemElement.CompanyName = CompanyName.text
+        CompanyItemElement.CompanyAddress = CompanyAddress.text
+        CompanyItemElement.CompanyNIP = CompanyNIP?.text
+        CompanyItemElement.CompanyCarRegistrationNumber = CompanyCarRegistrationNumber?.text
+        CompanyItemElement.CompanyRegon = CompanyRegon?.text
+        
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: CompanyItemElement)
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(encodedData, forKey: saveDataKey)
     }
 }
 
