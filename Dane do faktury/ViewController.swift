@@ -173,6 +173,16 @@ class ViewController: UIViewController {
         userDefaults.set(encodedData, forKey: saveDataKey)
     }
     
+    private func showWarningInfo()
+    {
+        let alertController = UIAlertController(title: "Uwaga", message: "Należy podać nazwę firmy oraz adres !", preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title:"Ok", style: .default, handler: { (pAlert) in
+            
+        })
+        alertController.addAction(defaultAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     private func blockScreenTurningOff() {
         UIApplication.shared.isIdleTimerDisabled = false
         UIApplication.shared.isIdleTimerDisabled = true
