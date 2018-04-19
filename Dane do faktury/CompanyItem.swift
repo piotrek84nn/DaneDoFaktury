@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CompanyItem : NSObject, NSCoding {
+final class CompanyItem : NSObject, NSCoding {
     
     var CompanyName: String!;
     var CompanyAddress: String!;

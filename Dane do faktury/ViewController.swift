@@ -8,84 +8,84 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
 
-    @IBOutlet weak var CompanyName: UITextView!
-    @IBOutlet weak var CompanyAddress: UITextView!
-    @IBOutlet weak var EditSaveButton: UIButton!
+    @IBOutlet weak private var companyName: UITextView!
+    @IBOutlet weak private var companyAddress: UITextView!
+    @IBOutlet weak private var editSaveButton: UIButton!
     
-    @IBOutlet weak var CompanyNIPLabel: UILabel!
-    @IBOutlet weak var CompanyNIP: UITextField!
+    @IBOutlet weak private var companyNIPLabel: UILabel!
+    @IBOutlet weak private var companyNIP: UITextField!
     
-    @IBOutlet weak var CompanyCarRegistrationLabel: UILabel!
-    @IBOutlet weak var CompanyCarRegistrationNumber: UITextField!
+    @IBOutlet weak private var companyCarRegistrationLabel: UILabel!
+    @IBOutlet weak private var companyCarRegistrationNumber: UITextField!
     
-    @IBOutlet weak var CompanyRegonLabel: UILabel!
-    @IBOutlet weak var CompanyRegon: UITextField!
+    @IBOutlet weak private var companyRegonLabel: UILabel!
+    @IBOutlet weak private var companyRegon: UITextField!
     
-    let saveDataKey = "CompanyNameKey"
-    var CompanyItemElement: CompanyItem!
-    var IsEditMode: Bool = false;
-    var toolbar: UIToolbar!
+    private let saveDataKey = "CompanyNameKey"
+    private var companyItemElement: CompanyItem!
+    private var isEditMode: Bool = false;
+    private var toolbar: UIToolbar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        EditSaveButton.addTarget(self, action: #selector(editSaveAction), for: .touchUpInside)
-        setupViewEditing(isEditingMode: IsEditMode)
+        editSaveButton.addTarget(self, action: #selector(editSaveAction), for: .touchUpInside)
+        setupViewEditing(isEditingMode: isEditMode)
         initDoneButton()
         
-        loadData(item: CompanyItemElement);
+        loadData(item: companyItemElement);
         
-        if(CompanyItemElement?.CompanyName?.count == 0 || CompanyItemElement?.CompanyAddress?.count == 0) {
+        if(companyItemElement?.CompanyName?.count == 0 || companyItemElement?.CompanyAddress?.count == 0) {
             editSaveAction(sender: nil)
         }
     }
     
     private func loadData(item : CompanyItem!) {
         
-        CompanyItemElement = CompanyItem()
+        companyItemElement = CompanyItem()
         blockScreenTurningOff();
         
         if let readedData = UserDefaults.standard.object(forKey: saveDataKey) as? Data {
             if let decodedCompanyItem = NSKeyedUnarchiver.unarchiveObject(with: readedData) as? CompanyItem
             {
                 if let cName = decodedCompanyItem.CompanyName, let cAddress = decodedCompanyItem.CompanyAddress {
-                    CompanyItemElement.CompanyName = cName
-                    CompanyItemElement.CompanyAddress = cAddress
+                    companyItemElement.CompanyName = cName
+                    companyItemElement.CompanyAddress = cAddress
                     
                 }
                 
                 if let cNIP = decodedCompanyItem.CompanyNIP {
-                    CompanyItemElement.CompanyNIP = cNIP
+                    companyItemElement.CompanyNIP = cNIP
                 }
                 
                 if let cRegistrationNumber = decodedCompanyItem.CompanyCarRegistrationNumber {
-                    CompanyItemElement.CompanyCarRegistrationNumber = cRegistrationNumber
+                    companyItemElement.CompanyCarRegistrationNumber = cRegistrationNumber
                 }
                 
                 if let cRegon = decodedCompanyItem.CompanyRegon {
-                    CompanyItemElement.CompanyRegon = cRegon
+                    companyItemElement.CompanyRegon = cRegon
                 }
             }
         }
         
-        CompanyName.text = CompanyItemElement?.CompanyName;
-        CompanyAddress.text = CompanyItemElement?.CompanyAddress;
-        CompanyNIP.text = CompanyItemElement?.CompanyNIP;
-        CompanyCarRegistrationNumber.text = CompanyItemElement?.CompanyCarRegistrationNumber;
+        companyName.text = companyItemElement?.CompanyName;
+        companyAddress.text = companyItemElement?.CompanyAddress;
+        companyNIP.text = companyItemElement?.CompanyNIP;
+        companyCarRegistrationNumber.text = companyItemElement?.CompanyCarRegistrationNumber;
         
-        showHideLabel(label: CompanyNIPLabel, uiElementIsHiden: !CompanyNIP.hasText);
-        showHideLabel(label: CompanyCarRegistrationLabel, uiElementIsHiden: !CompanyCarRegistrationNumber.hasText);
-        showHideLabel(label: CompanyRegonLabel, uiElementIsHiden: !CompanyRegon.hasText);
+        showHideLabel(label: companyNIPLabel, uiElementIsHiden: !companyNIP.hasText);
+        showHideLabel(label: companyCarRegistrationLabel, uiElementIsHiden: !companyCarRegistrationNumber.hasText);
+        showHideLabel(label: companyRegonLabel, uiElementIsHiden: !companyRegon.hasText);
     }
     
     private func setupViewEditing(isEditingMode: Bool) {
-        CompanyName.isEditable = isEditingMode;
-        CompanyAddress.isEditable = isEditingMode;
-        CompanyNIP.isEnabled = isEditingMode;
-        CompanyCarRegistrationNumber.isEnabled = isEditingMode;
-        CompanyRegon.isEnabled = isEditingMode;
+        companyName.isEditable = isEditingMode;
+        companyAddress.isEditable = isEditingMode;
+        companyNIP.isEnabled = isEditingMode;
+        companyCarRegistrationNumber.isEnabled = isEditingMode;
+        companyRegon.isEnabled = isEditingMode;
     }
     
     private func showHideLabel(label: UILabel, uiElementIsHiden: Bool) {
@@ -102,16 +102,16 @@ class ViewController: UIViewController {
             foregroundColor = UIColor.white;
         }
         
-        CompanyName.backgroundColor = backgroundColor;
-        CompanyName.textColor = foregroundColor
-        CompanyAddress.backgroundColor = backgroundColor
-        CompanyAddress.textColor = foregroundColor
-        CompanyNIP.backgroundColor = backgroundColor
-        CompanyNIP.textColor = foregroundColor
-        CompanyCarRegistrationNumber.backgroundColor = backgroundColor
-        CompanyCarRegistrationNumber.textColor = foregroundColor
-        CompanyRegon.backgroundColor = backgroundColor
-        CompanyRegon.textColor = foregroundColor
+        companyName.backgroundColor = backgroundColor;
+        companyName.textColor = foregroundColor
+        companyAddress.backgroundColor = backgroundColor
+        companyAddress.textColor = foregroundColor
+        companyNIP.backgroundColor = backgroundColor
+        companyNIP.textColor = foregroundColor
+        companyCarRegistrationNumber.backgroundColor = backgroundColor
+        companyCarRegistrationNumber.textColor = foregroundColor
+        companyRegon.backgroundColor = backgroundColor
+        companyRegon.textColor = foregroundColor
     }
     
     private func initDoneButton() {
@@ -121,11 +121,11 @@ class ViewController: UIViewController {
         toolbar.setItems([flexSpace, doneBtn], animated: false)
         toolbar.sizeToFit()
         
-        CompanyName.inputAccessoryView = toolbar
-        CompanyAddress.inputAccessoryView = toolbar
-        CompanyNIP.inputAccessoryView = toolbar
-        CompanyCarRegistrationNumber.inputAccessoryView = toolbar
-        CompanyRegon.inputAccessoryView = toolbar
+        companyName.inputAccessoryView = toolbar
+        companyAddress.inputAccessoryView = toolbar
+        companyNIP.inputAccessoryView = toolbar
+        companyCarRegistrationNumber.inputAccessoryView = toolbar
+        companyRegon.inputAccessoryView = toolbar
         
         toolbar.isHidden = true;
     }
@@ -139,36 +139,36 @@ class ViewController: UIViewController {
     }
     
     @objc func editSaveAction(sender: UIButton!) {
-        IsEditMode = !IsEditMode;
-        toolbar.isHidden = !IsEditMode;
-        setupViewEditing(isEditingMode: IsEditMode);
-        setTextInputElementsEditViewMode(isEditingMode: IsEditMode);
+        isEditMode = !isEditMode;
+        toolbar.isHidden = !isEditMode;
+        setupViewEditing(isEditingMode: isEditMode);
+        setTextInputElementsEditViewMode(isEditingMode: isEditMode);
         
-        if(IsEditMode)
+        if(isEditMode)
         {
-            EditSaveButton.setTitle("Zapisz", for: .normal);
-            showHideLabel(label: CompanyNIPLabel, uiElementIsHiden: false);
-            showHideLabel(label: CompanyCarRegistrationLabel, uiElementIsHiden: false);
-            showHideLabel(label: CompanyRegonLabel, uiElementIsHiden: false);
+            editSaveButton.setTitle("Zapisz", for: .normal);
+            showHideLabel(label: companyNIPLabel, uiElementIsHiden: false);
+            showHideLabel(label: companyCarRegistrationLabel, uiElementIsHiden: false);
+            showHideLabel(label: companyRegonLabel, uiElementIsHiden: false);
         }
         else
         {
             saveData()
-            EditSaveButton.setTitle("Edytuj ", for: .normal);
-            showHideLabel(label: CompanyNIPLabel, uiElementIsHiden: !CompanyNIP.hasText);
-            showHideLabel(label: CompanyCarRegistrationLabel, uiElementIsHiden: !CompanyCarRegistrationNumber.hasText);
-            showHideLabel(label: CompanyRegonLabel, uiElementIsHiden: !CompanyRegon.hasText);
+            editSaveButton.setTitle("Edytuj ", for: .normal);
+            showHideLabel(label: companyNIPLabel, uiElementIsHiden: !companyNIP.hasText);
+            showHideLabel(label: companyCarRegistrationLabel, uiElementIsHiden: !companyCarRegistrationNumber.hasText);
+            showHideLabel(label: companyRegonLabel, uiElementIsHiden: !companyRegon.hasText);
         }
     }
     
     private func saveData() {
-        CompanyItemElement.CompanyName = CompanyName.text
-        CompanyItemElement.CompanyAddress = CompanyAddress.text
-        CompanyItemElement.CompanyNIP = CompanyNIP?.text
-        CompanyItemElement.CompanyCarRegistrationNumber = CompanyCarRegistrationNumber?.text
-        CompanyItemElement.CompanyRegon = CompanyRegon?.text
+        companyItemElement.CompanyName = companyName.text
+        companyItemElement.CompanyAddress = companyAddress.text
+        companyItemElement.CompanyNIP = companyNIP?.text
+        companyItemElement.CompanyCarRegistrationNumber = companyCarRegistrationNumber?.text
+        companyItemElement.CompanyRegon = companyRegon?.text
         
-        let encodedData = NSKeyedArchiver.archivedData(withRootObject: CompanyItemElement)
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: companyItemElement)
         let userDefaults = UserDefaults.standard
         userDefaults.set(encodedData, forKey: saveDataKey)
     }
