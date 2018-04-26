@@ -18,7 +18,7 @@ extension String {
     }
 }
 
-final class ViewController: UIViewController {
+final class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak private var companyName: UITextView!
     @IBOutlet weak private var companyAddress: UITextView!
@@ -34,12 +34,18 @@ final class ViewController: UIViewController {
     @IBOutlet weak private var companyRegon: UITextField!
     
     private let saveDataKey = "CompanyNameKey"
+    private let nipMaxNumberLenght = 10
+    private let regonMaxNumberLenght = 9
+    private let carRegistrationMaxNumberLenght = 8
     private var companyItemElement: CompanyItem!
     private var isEditMode: Bool = false;
     private var toolbar: UIToolbar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        companyNIP.delegate = self
+        companyCarRegistrationNumber.delegate = self
+        companyRegon.delegate = self
         
         editSaveButton.addTarget(self, action: #selector(editSaveAction), for: .touchUpInside)
         setupViewEditing(isEditingMode: isEditMode)
@@ -51,6 +57,21 @@ final class ViewController: UIViewController {
         {
             isEditMode = false;
             editSaveAction(sender: nil)
+        }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return true }
+        let newLength = text.count + string.count - range.length
+        switch textField {
+        case companyNIP:
+            return newLength <= nipMaxNumberLenght
+        case companyCarRegistrationNumber:
+            return newLength <= carRegistrationMaxNumberLenght
+        case companyRegon:
+            return newLength <= regonMaxNumberLenght
+        default:
+            return newLength <= 50
         }
     }
     
