@@ -8,6 +8,16 @@
 
 import UIKit
 
+extension String {
+    static func isEmptyString(optionalString:String?) -> Bool {
+        if let stringToCheck = optionalString {
+            return stringToCheck.isEmpty
+        } else {
+            return true
+        }
+    }
+}
+
 final class ViewController: UIViewController {
 
     @IBOutlet weak private var companyName: UITextView!
@@ -36,8 +46,10 @@ final class ViewController: UIViewController {
         initDoneButton()
         
         loadData(item: companyItemElement);
-        
-        if(companyItemElement?.CompanyName?.count == 0 || companyItemElement?.CompanyAddress?.count == 0) {
+
+        if(String.isEmptyString(optionalString: companyItemElement.CompanyName) || String.isEmptyString(optionalString: companyItemElement.CompanyAddress))
+        {
+            isEditMode = false;
             editSaveAction(sender: nil)
         }
     }
@@ -53,7 +65,6 @@ final class ViewController: UIViewController {
                 if let cName = decodedCompanyItem.CompanyName, let cAddress = decodedCompanyItem.CompanyAddress {
                     companyItemElement.CompanyName = cName
                     companyItemElement.CompanyAddress = cAddress
-                    
                 }
                 
                 if let cNIP = decodedCompanyItem.CompanyNIP {
@@ -139,6 +150,12 @@ final class ViewController: UIViewController {
     }
     
     @objc func editSaveAction(sender: UIButton!) {
+        if(isEditMode && (String.isEmptyString(optionalString: companyName.text)
+                || String.isEmptyString(optionalString: companyAddress.text)))
+        {
+            return
+        }
+        
         isEditMode = !isEditMode;
         toolbar.isHidden = !isEditMode;
         setupViewEditing(isEditingMode: isEditMode);
@@ -176,9 +193,7 @@ final class ViewController: UIViewController {
     private func showWarningInfo()
     {
         let alertController = UIAlertController(title: "Uwaga", message: "Należy podać nazwę firmy oraz adres !", preferredStyle: .alert)
-        let defaultAction = UIAlertAction(title:"Ok", style: .default, handler: { (pAlert) in
-            
-        })
+        let defaultAction = UIAlertAction(title:"Ok", style: .default, handler: { (pAlert) in})
         alertController.addAction(defaultAction)
         self.present(alertController, animated: true, completion: nil)
     }
